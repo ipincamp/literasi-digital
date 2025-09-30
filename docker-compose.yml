@@ -1,0 +1,72 @@
+# docker-compose.yml
+services:
+  #--- Layanan App (PHP-FPM, Node, Composer) ---#
+  app:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      args:
+        # Mengambil UID dan GID dari file .env
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: literasi_app
+    restart: unless-stopped
+    working_dir: /var/literasi
+    volumes:
+      # Ini sekarang aman karena UID/GID cocok!
+      - .:/var/literasi
+    networks:
+      - literasi
+
+  #--- Layanan Web Server (Nginx) ---#
+  webserver:
+    image: nginx:alpine
+    container_name: laravel_webserver
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/literasi
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - literasi
+    depends_on:
+      - app
+
+  #--- Layanan Database (MySQL) ---#
+  db:
+    image: mysql:8.0
+    container_name: literasi_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_USER: ${DB_USERNAME:-user}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - literasi
+
+  #--- Layanan phpMyAdmin ---#
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: literasi_pma
+    restart: unless-stopped
+    ports:
+      - "8001:80"
+    environment:
+      PMA_HOST: db
+    networks:
+      - literasi
+    depends_on:
+      - db
+
+#--- Networks & Volumes ---#
+networks:
+  literasi:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
