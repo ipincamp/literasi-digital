@@ -41,7 +41,7 @@ services:
     ports:
       - "8001:80"
     environment:
-      PMA_HOST: host.docker.internal
+      PMA_HOST: ${DB_HOST}
       PMA_PORT: 3306
     networks:
       - literasi
