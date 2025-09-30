@@ -41,8 +41,6 @@ RUN docker-php-ext-install \
 # Instalasi Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# BARIS YANG MENYEBABKAN ERROR SUDAH DIHAPUS DARI SINI
-
 # Buat group baru dengan GID dari host
 RUN addgroup -g ${GID} devgroup
 
@@ -53,7 +51,7 @@ RUN adduser -D -u ${UID} -G devgroup devuser
 USER devuser
 
 # Expose port untuk FPM
-EXPOSE 10000
+EXPOSE 9000
 
 # Perintah default untuk menjalankan PHP-FPM
 CMD ["php-fpm"]
