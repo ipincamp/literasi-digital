@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,4 +17,4 @@ jobs:
           REMOTE_USER: ${{ secrets.DEPLOY_USER }}
           SOURCE: "./"
           TARGET: "/var/www/tesletliterasisains.com"
-          EXCLUDE: "/.git/, /.github/, /node_modules/"
+          EXCLUDE: "/.git/, /.github/, /node_modules/, /vendor/"
