@@ -1,20 +1,27 @@
 name: Deploy to Production VPS
+
 on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Deploy to VPS with rsync
-        uses: easingthemes/ssh-deploy@v2.2.11
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
-          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
-          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
-          SOURCE: "./"
-          TARGET: "/var/www/tesletliterasisains.com"
-          EXCLUDE: "/.git/, /.github/, /node_modules/, /vendor/"
+      - name: SSH to VPS and run git pull
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+
+          script: |
+            cd /var/www/tesletliterasisains.com
+            git pull origin main
+
+            # (Opsional) perintah lain
+            # Misalnya:
+            # composer install --no-dev
+            # php artisan cache:clear
+            # npm run build
