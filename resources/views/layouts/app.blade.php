@@ -165,6 +165,9 @@
                 </a>
                 <ul class="nav flex-column collapse ms-3" id="masterSoalMenu">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url('paket') }}">Paket Soal</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url('soal') }}">Soal</a>
                     </li>
                     <li class="nav-item">

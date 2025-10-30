@@ -22,6 +22,7 @@
                     <th class="text-center">Domain</th>
                     <th class="text-center">Indikator</th>
                     <th class="text-center">Teslet</th>
+                    <th class="text-center">Paket</th>
                     <th class="text-center" width="120">Aksi</th>
                 </tr>
             </thead>
@@ -39,6 +40,10 @@
                         @else
                         -
                         @endif
+                    </td>
+                    <td>
+                        {{-- Tampilkan paket: coba beberapa kemungkinan properti --}}
+                        {{ $soal->paket_keterangan ?? $soal->paket_nama ?? (isset($soal->paket) ? ($soal->paket) : '-') }}
                     </td>
                     <td align="center">
                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $soal->id }}">
@@ -74,12 +79,14 @@
                                         <label>Pembahasan</label>
                                         <textarea name="pembahasan" class="form-control">{{ $soal->pembahasan }}</textarea>
                                     </div>
+
                                     @foreach (['a','b','c','d'] as $opt)
                                     <div class="col-md-6">
                                         <label>Pilihan {{ strtoupper($opt) }}</label>
                                         <textarea name="pilihan_{{ $opt }}" class="form-control">{{ $soal->{'pilihan_'.$opt} }}</textarea>
                                     </div>
                                     @endforeach
+
                                     <div class="col-md-4">
                                         <label>Kunci Jawaban</label>
                                         <select name="kunci_jawaban" class="form-control">
@@ -89,6 +96,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+
                                     <div class="col-md-4">
                                         <label>Domain Kognitif</label>
                                         <select name="domain_kognitif" class="form-control">
@@ -98,6 +106,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+
                                     <div class="col-md-4">
                                         <label>Indikator Literasi</label>
                                         <select name="indikator_literasi" class="form-control">
@@ -107,7 +116,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-12">
+
+                                    <div class="col-md-8">
                                         <label>Teslet</label>
                                         <select name="teslet" class="form-control">
                                             <option value="">-</option>
@@ -118,6 +128,24 @@
                                             @endforeach
                                         </select>
                                     </div>
+
+                                    <div class="col-md-4">
+                                        <label>Paket</label>
+                                        <select name="paket" class="form-control">
+                                            <option value="">-</option>
+                                            @foreach ($pakets as $p)
+                                            <option value="{{ $p->id }}"
+                                                {{ (
+                                                    (isset($soal->paket) && $soal->paket == $p->id) ||
+                                                    (isset($soal->paket_id) && $soal->paket_id == $p->id) ||
+                                                    (isset($soal->paket_keterangan) && $soal->paket_keterangan == $p->nama_paket)
+                                                 ) ? 'selected' : '' }}>
+                                                {{ $p->nama_paket }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -178,12 +206,14 @@
                             <label>Pembahasan</label>
                             <textarea name="pembahasan" class="form-control"></textarea>
                         </div>
+
                         @foreach (['a','b','c','d'] as $opt)
                         <div class="col-md-6">
                             <label>Pilihan {{ strtoupper($opt) }}</label>
                             <textarea name="pilihan_{{ $opt }}" class="form-control"></textarea>
                         </div>
                         @endforeach
+
                         <div class="col-md-4">
                             <label>Kunci Jawaban</label>
                             <select name="kunci_jawaban" class="form-control">
@@ -193,6 +223,7 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="col-md-4">
                             <label>Domain Kognitif</label>
                             <select name="domain_kognitif" class="form-control">
@@ -202,6 +233,7 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="col-md-4">
                             <label>Indikator Literasi</label>
                             <select name="indikator_literasi" class="form-control">
@@ -211,15 +243,27 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-12">
+
+                        <div class="col-md-8">
                             <label>Teslet</label>
                             <select name="teslet" class="form-control">
                                 <option value="">-</option>
                                 @foreach ($teslets as $t)
-                                <option value="{{ $t->id }}">{{ $t->judul }}</option>
+                                <option value="{{ $t->id }}">{{ $t->judul ?? 'Gambar #'.$t->id }}</option>
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="col-md-4">
+                            <label>Paket</label>
+                            <select name="paket" class="form-control">
+                                <option value="">-</option>
+                                @foreach ($pakets as $p)
+                                <option value="{{ $p->id }}">{{ $p->nama_paket }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -240,7 +284,7 @@
                 url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json'
             },
             columnDefs: [
-                { orderable: false, targets: 6 }
+                { orderable: false, targets: 7 }
             ]
         });
     });

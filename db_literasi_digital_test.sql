@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jul 20, 2025 at 04:50 AM
--- Server version: 8.4.3
--- PHP Version: 8.3.16
+-- Host: 127.0.0.1
+-- Generation Time: Oct 30, 2025 at 09:15 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_literasi_digital_test`
+-- Database: `teslet`
 --
 
 -- --------------------------------------------------------
@@ -28,18 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` int NOT NULL
+  `key` varchar(255) NOT NULL,
+  `value` mediumtext NOT NULL,
+  `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel_cache_tes1|127.0.0.1', 'i:2;', 1752986073),
-('laravel_cache_tes1|127.0.0.1:timer', 'i:1752986073;', 1752986073);
 
 -- --------------------------------------------------------
 
@@ -48,9 +40,9 @@ INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` int NOT NULL
+  `key` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -60,10 +52,10 @@ CREATE TABLE `cache_locks` (
 --
 
 CREATE TABLE `domain_kognitif` (
-  `id` int NOT NULL,
-  `keterangan` text,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -82,13 +74,13 @@ INSERT INTO `domain_kognitif` (`id`, `keterangan`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -98,10 +90,10 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `indikator_literasi` (
-  `id` int NOT NULL,
-  `keterangan` text,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -129,13 +121,13 @@ INSERT INTO `indikator_literasi` (`id`, `keterangan`, `created_at`, `updated_at`
 --
 
 CREATE TABLE `jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attempts` tinyint UNSIGNED NOT NULL,
-  `reserved_at` int UNSIGNED DEFAULT NULL,
-  `available_at` int UNSIGNED NOT NULL,
-  `created_at` int UNSIGNED NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -145,16 +137,16 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_jobs` int NOT NULL,
-  `pending_jobs` int NOT NULL,
-  `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
-  `cancelled_at` int DEFAULT NULL,
-  `created_at` int NOT NULL,
-  `finished_at` int DEFAULT NULL
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `total_jobs` int(11) NOT NULL,
+  `pending_jobs` int(11) NOT NULL,
+  `failed_jobs` int(11) NOT NULL,
+  `failed_job_ids` longtext NOT NULL,
+  `options` mediumtext DEFAULT NULL,
+  `cancelled_at` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `finished_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -164,9 +156,9 @@ CREATE TABLE `job_batches` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -185,12 +177,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `nilai` (
-  `id` int NOT NULL,
-  `id_soal` int NOT NULL,
-  `id_siswa` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `id_soal` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
   `jawaban` varchar(10) NOT NULL,
-  `nilai` int NOT NULL,
-  `percobaan` int NOT NULL,
+  `nilai` int(11) NOT NULL,
+  `percobaan` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -267,12 +259,34 @@ INSERT INTO `nilai` (`id`, `id_soal`, `id_siswa`, `jawaban`, `nilai`, `percobaan
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `paket`
+--
+
+CREATE TABLE `paket` (
+  `id` int(11) NOT NULL,
+  `nama_paket` varchar(100) NOT NULL,
+  `status` enum('aktif','non aktif') DEFAULT 'aktif',
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `paket`
+--
+
+INSERT INTO `paket` (`id`, `nama_paket`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Paket A', 'aktif', '2025-10-30 14:56:59', '2025-10-30 15:15:15'),
+(2, 'Paket B', 'non aktif', '2025-10-30 14:59:59', '2025-10-30 15:15:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_reset_tokens`
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -283,7 +297,7 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `petunjuk` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `petunjuk` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -303,12 +317,12 @@ INSERT INTO `petunjuk` (`id`, `petunjuk`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_activity` int NOT NULL
+  `id` varchar(255) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `payload` longtext NOT NULL,
+  `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -316,7 +330,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('mv4ArSW0S5coxuaYiUnNiwP7iDtn3uck6BF8XPOy', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWVNadk1GS2M3eExrbmxORkN1OWZuc1oySE1MY0xYQ2ZLMGx3WTAyZyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ob21lIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NTI5ODY5ODY7fX0=', 1752986986);
+('mv4ArSW0S5coxuaYiUnNiwP7iDtn3uck6BF8XPOy', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWVNadk1GS2M3eExrbmxORkN1OWZuc1oySE1MY0xYQ2ZLMGx3WTAyZyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ob21lIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NTI5ODY5ODY7fX0=', 1752986986),
+('YrO9jhtoeKL7cYK7jqMgjn773jrJzxr2Djt4po2i', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVHhta0NwZjVEa0RIRW9KTG9hVTVZUVk5bTBJNVQ5YmhTNFNHcXA4dCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fX0=', 1761812129);
 
 -- --------------------------------------------------------
 
@@ -325,57 +340,58 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 --
 
 CREATE TABLE `soal` (
-  `id` int NOT NULL,
-  `indikator_soal` text,
-  `soal` text,
-  `pilihan_a` text,
-  `pilihan_b` text,
-  `pilihan_c` text,
-  `pilihan_d` text,
+  `id` int(11) NOT NULL,
+  `indikator_soal` text DEFAULT NULL,
+  `soal` text DEFAULT NULL,
+  `pilihan_a` text DEFAULT NULL,
+  `pilihan_b` text DEFAULT NULL,
+  `pilihan_c` text DEFAULT NULL,
+  `pilihan_d` text DEFAULT NULL,
   `kunci_jawaban` varchar(1) DEFAULT NULL,
-  `pembahasan` text,
-  `domain_kognitif` int DEFAULT NULL,
-  `indikator_literasi` int DEFAULT NULL,
-  `teslet` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `pembahasan` text DEFAULT NULL,
+  `domain_kognitif` int(11) DEFAULT NULL,
+  `indikator_literasi` int(11) DEFAULT NULL,
+  `teslet` int(11) DEFAULT NULL,
+  `paket` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `soal`
 --
 
-INSERT INTO `soal` (`id`, `indikator_soal`, `soal`, `pilihan_a`, `pilihan_b`, `pilihan_c`, `pilihan_d`, `kunci_jawaban`, `pembahasan`, `domain_kognitif`, `indikator_literasi`, `teslet`, `created_at`, `updated_at`) VALUES
-(1, 'Siswa mampu memahami peristiwa gunung meletus dengan tepat', 'Berdasarkan teks wacana di atas, penjelasan tentang gunung meletus yang tepat adalah….', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh tanah longsor', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh perbuatan manusia', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh terdorongnya endapan magma dalam perut bumi menuju ke luar', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh adanya angin topan', 'C', 'Secara teori dan penjelasan yang ada di dalam wacana, jawaban yang benar adalah C', 1, 1, 1, '2025-07-18 01:10:01', '2025-07-18 01:10:01'),
-(2, 'Siswa mampu memberikan contoh material yang keluar saat terjadi peristiwa gunung meletus', 'Selain endapan magma, material lain yang biasanya keluar terdorong pada peristiwa gunung meletus yaitu….', 'tanah', 'batu', 'air', 'arang', 'B', 'Dari wacana diperoleh informasi bahwa yang keluar bersama magma ketika gunung meletus adalah abu dan batu. Oleh sebab itu jawaban yang benar adalah B.', 1, 2, 1, '2025-07-18 21:06:51', '2025-07-18 21:06:51'),
-(3, 'Siswa mampu memahami dampak negatif yang ditimbulkan oleh peristiwa gunung meletus', 'Dampak negatif yang ditimbulkan dari adanya peristiwa gunung meletus yaitu….', 'lahan di sekitar menjadi subur', 'tumbuhan yang tumbuh menghijau', 'suhu di sekitar gunung menjadi sangat panas', 'suhu di sekitar gunung menjadi sangat dingin', 'C', 'Dari wacana diperoleh informasi bahwa suhu di sekitar gunung yang meletus menjadi sangat panas. Dengan demikian jawaban yang benar adalah C', 1, 3, 1, '2025-07-19 00:37:43', '2025-07-19 00:37:43'),
-(4, 'Siswa mampu memahami faktor penyebab dan bukan faktor penyebab terjadinya tsunami', 'Berdasarkan teks artikel di atas, yang bukan merupakan penyebab terjadinya tsunami adalah….', 'gempa bumi', 'gunung meletus', 'banjir bandang', 'asteroid jatuh', 'C', 'Di wacana menginformasikan bahwa Tsunami juga dapat disebabkan oleh longsor, aktivitas gunung api, serta asteroid dan komet yang menabrak atau meledak di atas laut. Dari pilihan jawaban yang tidak termasuk penyebab tsunami adalah banjir\r\nbandang, Jadi jawaban yang benar adalah C.', 1, 1, 2, '2025-07-19 00:39:17', '2025-07-19 00:39:17'),
-(5, 'Siswa mampu menghubung- kan pengetahu- an yang dimili- kinya dalam konteks faktor penyebab air laut surut sementara setelah	aktivitas seismik', 'Faktor yang menyebabkan timbulnya gejala awal tsunami yaitu air laut menjadi surut sementara waktu, karena adanya aktivitas ….', 'bom di laut yang mengakibatkan ledakan', 'seismik di tengah laut yang mengakibatkan patahan', 'hewan laut yang menyebabkan benturan', 'manusia yang membuat ledakan', 'B', 'Di wacana mengin-formasikan bahwa umumnya tsunami terjadi akibat ada-nya aktivitas seis-mik di tengah laut. Saat terjadi hal tersebut maka patahan akan membuat air laut menjadi surut sementara waktu. Jawaban yang benar adalah B', 2, 7, 2, '2025-07-19 00:41:03', '2025-07-19 00:41:03'),
-(6, 'Siswa mampu memecahkan masalah praktis ketika air laut surut secara tiba-tiba', 'Apa langkah mitigasi yang bisa kita lakukan saat melihat air laut surut secara tiba-tiba setelah aktivitas tektonik?', 'mencari tahu penyebab air laut surut secara tiba-tiba', 'berkeliling di tepi pantai karena air laut surut', 'berlari menyelamatkan diri ke tempat yang lebih tinggi', 'mencari kerang di tepi pantai karena air laut surut', 'C', 'Ketika melihat air laut surut setelah aktivitas tektonik, sebaiknya segera menyelamatkan diri dengan mencari tempat yang lebih tinggi. Jawaban yang benar adalah C', 2, 4, 2, '2025-07-19 00:42:30', '2025-07-19 00:42:30'),
-(7, 'Siswa mampu memahami peristiwa angin topan dengan tepat', 'Berdasarkan teks wacana di atas, penjelasan yang tepat terkait angin topan adalah peristiwa ….', 'biasa yang tidak merugikan kehidupan manusia', 'alam yang menyebabkan perubahan kondisi alam', 'bencana yang disebabkan oleh perbuatan manusia', 'bencana alam yang kejadiannya dapat dicegah', 'B', 'Pada wacana tertera bahwa angin topan merupakan bencana yang disebabkan oleh faktor alam yang bisa  menyebabkan  perubahan\r\nkondisi alam di permukaan bumi. Jawaban yang benar adalah B', 1, 1, 3, '2025-07-19 00:44:30', '2025-07-19 00:44:30'),
-(8, 'Siswa mampu menerapkan pengetahuan sains untuk menyelesaikan masalah', 'Saat angin topan terjadi, berikut ini merupakan tindakan yang perlu dilakukan, kecuali….', 'berlindung pada bangunan yang kokoh', 'menghindari bangunan yang tinggi', 'menghindari kendaraan umum', 'mengindari tiang listrik', 'C', 'Informasi yang ada di wacana, saat angin topan terjadi, perlu dilakukan tindakan siaga bencana, seperti berlindung pada bangunan yang kokoh, hindari bangunan yang tinggi, seperti pohon, tiang listrik, pamflet, dan sejenisnya. Jadi jawaban yang benar adalah C', 2, 10, 3, '2025-07-19 00:46:45', '2025-07-19 00:50:42'),
-(9, 'Siswa mampu memahami dampak negatif yang ditimbulkan oleh angin topan', 'Dampak yang dapat ditimbulkan dari adanya badai angin topan sebagai berikut ini, kecuali menyebabkan ….', 'jatuhnya korban jiwa', 'kerugian materil karena rumah rusak', 'wilayah terdampak menjadi subur', 'kegiatan sosial masyarakat terganggu', 'C', 'Di dalam wacana menginforma- sikan bahwa dampak angin topan sering merobohkan rumah dan pohon, bahkan bisa menerbangkan apa saja yang ada di dekatnya. Secara implisit bermakna dapat menimbulkan korban jiwa, kerugian materi, dan mengganggu kegiatan masyarakat. Jadi jawaban benar adalah C', 1, 3, 3, '2025-07-19 00:52:00', '2025-07-19 00:52:00'),
-(10, 'Siswa mampu menyebutkan contoh fakta ilmiah berupa penyebab terjadinya gempa tektonik', 'Gempa tektonik terjadi karena adanya pergerakan….', 'magma bumi', 'asteroid', 'komet', 'lempeng bumi', 'D', 'Informasi yang tertera di wacana menyebutkan bahwa gempa bumi tektonik terjadi karena pergerakan lempeng bumi. Jadi jawaban yang benar adalah D', 1, 11, 4, '2025-07-19 01:00:03', '2025-07-19 01:00:03'),
-(11, 'Siswa mampu mengelompok kan atau mengklasifikas ikan faktor penyebab gempa dan bukan faktor penyebab gempa', 'Gempa bumi dapat diklasifikasikan berdasarkan beberapa faktor berikut ini, kecuali….', 'kekuatannya', 'kedalamannya', 'jenisnya', 'bentuknya', 'D', 'Di dalam wacana terdapat informasi bahwa gempa bumi dapat diklasifikasikan berdasarkan beberapa	faktor,	yaitu kekuatannya, kedalamannya, dan jenisnya. Jadi bentuk tidak termasuk faktor pengklasifikasi gempa bumi. Jawaban yang benar adalah D', 2, 5, 4, '2025-07-19 01:01:30', '2025-07-19 01:01:48'),
-(12, 'Siswa mampu menjelaskan gempa bumi yang dangkal lebih merusak daripada gempa bumi yang dalam', 'Gempa bumi yang dangkal dapat lebih merusak daripada gempa bumi yang dalam, karena terjadi di ….', 'dasar laut', 'kedalaman lebih dari 60 km', 'dasar bumi', 'dekat permukaan bumi', 'D', 'Dalam wacana juga disebutkan bahwa gempa bumi dangkal terjadi di dekat permukaan bumi. Jadi jawaban yang benar adalah D', 2, 6, 4, '2025-07-19 01:03:11', '2025-07-19 01:03:11'),
-(13, 'Siswa mampu mengenali penyebab banjir yang disebabkan oleh aktivitas manusia', 'Berdasarkan teks wacana di atas, penyebab banjir yang disebabkan oleh faktor manusia adalah….', 'erosi dan sedimentasi', 'curah hujan dan kapasitas sungai', 'pengaruh fisiografi dan air pasang', 'perubahan tata guna lahan dan sampah', 'D', 'Di wacana tertera informasi bahwa banjir dapat terjadi karena alam dan tindakan manusia. Salah satu tindakan manusia adalah perubahan tata guna lahan dan sampah. Jawaban yang benar adalah D', 1, 1, 5, '2025-07-19 01:04:21', '2025-07-19 01:04:21'),
-(14, 'Siswa mampu memecahkan masalah banjir melalui langkah pencegahan yang dapat dilakukan', 'Langkah mitigasi yang dapat kita lakukan untuk mencegah terjadinya banjir yang disebabkan oleh faktor manusia adalah….', 'mengubah hutan menjadi suatu permukiman', 'melakukan langkah deforestasi hutan', 'pembuangan sampah pada tempatnya', 'membuat permukiman penduduk di sepanjang aliran sungai', 'C', 'Di wacana tertera informasi bahwa banjir dapat terjadi karena alam dan tindakan manusia. Salah satu tindakan manusia adalah membuang sampah tidak pada tempatnya. Dengan demikian langkah mitigasi yang perlu dilakukan   adalah   membuang\r\nsampah pada tempatnya. Jadi jawaban benar C', 2, 4, 5, '2025-07-19 01:05:31', '2025-07-19 01:05:31'),
-(15, 'Siswa mampu menghasilkan penjelasan terkait fenomena sains yang dibaca', 'Berikut ini yang merupakan penjelasan tentang fenomena banjir yang tepat sesuai dengan artikel di atas adalah….', 'banjir merupakan peristiwa bencana yang hanya disebabkan oleh faktor alam', 'banjir merupakan peristiwa bencana yang hanya disebabkan oleh faktor tindakan manusia', 'banjir merupakan peristiwa bencana yang penyebab satu- satunya yaitu sampah', 'banjir merupakan peristiwa bencana yang disebabkan oleh faktor alam dan manusia', 'D', 'Di wacana tertera informasi bahwa banjir dapat terjadi karena alam dan tindakan manusia. Jadi tidak hanya disebabkan oleh salah satunya. Jawaban yang benar adalah D', 2, 6, 5, '2025-07-19 01:07:02', '2025-07-19 01:07:02'),
-(16, 'Siswa mampu mengenali faktor penyebab dan bukan faktor penyebab terjadinya longsor oleh aktivitas manusia', 'Berdasarkan teks artikel di atas, berikut ini yang bukan merupakan penyebab longsor hasil dari aktivitas manusia adalah….', 'deforestasi', 'alih fungsi lahan hutan', 'reboisasi', 'penebangan liar', 'C', 'Aktivitas manusia juga dapat menjadi penyebab tanah longsor, seperti deforestasi, alih fungsi lahan hutan. Deforestasi adalah penebangan liar. Jawaban yang benar adalah C', 1, 1, 6, '2025-07-19 19:47:08', '2025-07-19 19:47:08'),
-(17, 'Siswa mampu mencegah terjadinya longsor di lingkungan sekitar', 'Langkah mitigasi perlu dilakukan untuk mencegah terjadinya longsor di lingkungan kita, antara lain adalah ….', 'membangun villa di daerah perbukitan', 'menebang pohon di daerah perbukitan', 'melakukan kegiatan deforestasi hutan', 'melakukan kegiatan reboisasi hutan', 'D', 'Tindakan seperti melarang pembakaran hutan, menghentikan penebangan liar, dan melakukan reboisasi adalah langkah-langkah awal yang efektif dalam mencegah bencana tanah longsor. Jawaban yang benar adalah D.', 2, 4, 6, '2025-07-19 19:48:31', '2025-07-19 19:48:31'),
-(18, 'Siswa mampu menginterpreta sikan data dan informasi yang disajikan dalam bentuk grafik/diagram', 'Berdasakan grafik di atas, jenis sampah yang menempati posisi kedua terbanyak adalah….', 'sisa makanan', 'kayu/ranting/daun', 'logam', 'plastik', 'D', 'Pada grafik tampak bahwa jenis sampah yang menempati posisi pertama adalah sisa makanan (45,6%), ke-dua plastik (18,8%), ke-tiga kertas/karton (11,3%), dst. Jawaban yang benar D', 3, 8, 7, '2025-07-19 19:50:05', '2025-07-19 19:50:05'),
-(19, 'Siswa mampu menginterpreta sikan data dan informasi yang disajikan dalam bentuk grafik', 'Grafik di atas merupakan data statistik terkait jumlah bencana alam yang terjadi di Indonesia dalam kurun waktu tahun 2023 yang dikutip dari laman website Badan Nasional Penanggulangan Bencana (BNPB).\r\nBerdasarkan data grafik di atas, bencana alam yang menempati peringkat ketujuh sebagai bencana alam yang sering terjadi di Indonesia adalah….', 'banjir dan tanah longsor', 'abrasi', 'gempa bumi', 'kekeringan', 'C', 'Dari grafik dapat ditentukan urutan dari bencana yang paling sering terjadi:\r\n1.	Kebakaran hutan\r\n2.	Tanah longsor\r\n3.	Banjir\r\n4.	Puting beliung\r\n5.	Kekeringan\r\n6.	Banjir dan longsor\r\n7.	Gempa bumi\r\n8.	Abrasi\r\nJawaban yang benar C', 3, 8, 12, '2025-07-19 19:58:25', '2025-07-19 19:58:25'),
-(20, 'Siswa mampu menginterpreta sikan data dan informasi yang disajikan dalam bentuk grafik', 'Data grafik di atas merupakan data komposisi sampah nasional berdasarkan sumber sampah pada tahun 2023 yang dikutip dari laman website Kementerian Lingkungan Hidup dan Kehutanan.\r\nSumber sampah yang menempati posisi kelima terbanyak adalah….', 'rumah tangga', 'perkantoran', 'pasar tradisional', 'fasilitas publik', 'B', 'Dari grafik tampak bahwa urutan komposisi sampah dari yang paling besar adalah:\r\n1.	Rumah tangga\r\n2.	Pasar tradisional\r\n3.	Pusat perniagaan\r\n4.	Kawasan\r\n5.	Perkantoran\r\n6.	Fasilitas publik. Jawaban yang benar adalah B', 3, 8, 13, '2025-07-19 19:59:38', '2025-07-19 19:59:38'),
-(21, 'Siswa mampu menarik kesimpulan yang logis berdasarkan data dan informasi yang tersedia', 'Berdasarkan data grafik tersebut, dapat disimpulkan bahwa jumlah bencana alam yang terjadi di Indonesia ….', 'terus meningkat', 'cenderung naik turun', 'cenderung menurun', 'cenderung tetap/ajeg', 'B', 'Dari grafik tampak bahwa dari tahun ke tahun, jumlah kebencanaan	mengalami peningkatan dan penurunan yang fluktuatif (naik-turun). Jawaban yang benar B', 3, 9, 8, '2025-07-19 20:00:58', '2025-07-19 20:00:58'),
-(22, 'Siswa mampu menarik kesimpulan yang logis berdasarkan data dan informasi yang tersedia', 'Berdasarkan grafik di atas, jumlah bencana alam di Indonesia pada kurun waktu tahun 2015 sampai tahun 2020 adalah ....', 'cenderung menurun', 'cenderung meningkat', 'stagnan', 'fluktuatif', 'B', 'Dari grafik tampak bahwa pada kurun waktu 2015 sampai 2020 cenderung meningkat. Jawaban yang benar adalah B', 3, 9, 8, '2025-07-19 20:02:11', '2025-07-19 20:02:11'),
-(23, 'Berdasarkan teks dan tabel di atas, berikut ini yang termasuk kegiatan reduce ialah….', 'Berdasarkan teks dan tabel di atas, berikut ini yang termasuk kegiatan reduce ialah….', 'memanfaatkan botol plastik bekas untuk pot tanaman', 'mengganti kantong plastik dengan tas belanja dari kain', 'mengubah sampah plastik untuk dijadikan tas', 'memanfaatkan botol plastik bekas untuk tempat pensil', 'B', 'Reduce yaitu mengurangi sampah, berarti penggunaan tas belanja dari kain dapat mengurangi sampah kantong plastik. Jawaban benar B', 2, 4, 9, '2025-07-19 20:03:36', '2025-07-19 20:03:36'),
-(24, 'Siswa mampu memecahkan masalah praktis terkait dengan pengelolaan sampah dengan metode\r\nReuse', 'Berdasarkan teks dan tabel di atas, berikut ini yang merupakan kegiatan reuse ialah….', 'memanfaatkan botol plastik bekas sebagai tempat pensil', 'mengubah sampah plastik menjadi tas yang terbuat dari plastik', 'mengganti kantong plastik dengan tas belanja dari kain', 'mengubah sampah plastik menjadi jas hujan', 'A', 'Reuse, yaitu memanfaatkan kembali barang yang masih bisa digunakan. Berati kita dapat memanfaat botol plastik bekas sebagai tempat pinsil. Jawaban yang benar A', 2, 4, 9, '2025-07-19 20:05:13', '2025-07-19 20:05:13'),
-(25, 'Siswa mampu memecahkan masalah praktis terkait dengan pengelolaan sampah dengan metode Recycle', 'Berdasarkan teks dan tabel di atas, berikut ini yang merupakan termasuk kegiatan recycle ialah….', 'memanfaatkan botol plastik bekas sebagai tempat pensil', 'mengganti kantong plastik dengan tas belanja dari kain', 'memanfaatkan botol plastik sebagai pot tanaman', 'mengubah sampah plastik menjadi jas hujan', 'D', 'Recyle, yaitu menggunakan sampah untuk dilakukan daur ulang sehingga menjadi sesuatu yang lebih bernilai. Berarti kita dapat memanfaatkan sampah menjadi benda lain yang bermanfaat, misalnya mengubah sampah plastik menjadi jas hujan\r\natau sepatu atau benda lain. Jawaban benar adalah D', 2, 4, 9, '2025-07-19 20:06:27', '2025-07-19 20:06:27'),
-(26, 'Siswa mampu mengenali dampak negatif dalam bidang ekonomi yang ditimbulkan oleh sampah\r\nplastik', 'Berdasarkan teks artikel di atas, dampak negatif dalam bidang ekonomi yang ditimbulkan dari sampah plastik ialah….', 'penghasilan nelayan meningkat karena tersedia banyak ikan di laut', 'manusia dapat memakan ikan sebagai sumber makanan', 'penghasilan nelayan menurun karena banyak ikan mati akibat mikroplastik', 'manusia bisa membuang sampah ke laut dengan bebas', 'C', 'Dampak mikroplastik pada hasil tangkapan ikan menurun karena banyak ikan yang mati, akibatnya pendapatan menurun dan berdampak negatif pada bidang ekonomi. Jawaban yang benar adalah C', 1, 12, 10, '2025-07-19 20:08:05', '2025-07-19 20:08:05'),
-(27, 'Siswa mampu mengenali dampak negatif sampah plastik terhadap kehidupan masyarakat', 'Berdasarkan teks artikel di atas, dampak negatif sampah plastik terhadap kehidupan masyarakat ialah….', 'dapat mengonsumsi ikan yang baik untuk kesehatan', 'mengonsumsi ikan yang berbahaya bagi kesehatan', 'bebas memakan ikan yang bersumber dari laut', 'memiliki banyak pilihan terkait ikan yang dapat dikonsumsi', 'B', 'Dampak negatif sampah plastik terhadap kehidupan masyarakat yang disampaikan pada wacana adalah bahaya bagi tubuh manusia dan tentunya terkait dengan kesehatan. Jawaban yang benar adalah B.', 1, 3, 10, '2025-07-19 20:09:46', '2025-07-19 20:09:46'),
-(28, 'Siswa mampu memecahkan masalah praktis dengan cara membuang sampah organik pada tempatnya', 'Berdasarkan poster dan wacana di atas, Dewi dan Ibunya sebaiknya membuang sampah sisa sayuran dan buah-buahan pada tempat sampah ….', 'bahan berbahaya', 'anorganik', 'kantong plastik', 'organik', 'D', 'Sisa sayuran dan buah-buahan merupakan sampah yang cepat membusuk atau disebut dengan organik, maka tempat sampah yang dipilih adalah yang berwarna hijau atau tempat sampah organik. Juawaban yang tepat adalah D', 2, 4, 11, '2025-07-19 20:11:13', '2025-07-19 20:11:13'),
-(29, 'Siswa mampu memecahkan masalah praktis dengan cara membuang sampah anorganik pada tempatnya', 'Berdasarkan poster dan wacana di atas, Dewi dan Ibunya sebaiknya membuang sampah botol dan kaleng bekas minuman di tempat sampah ….', 'organik', 'bahan berbahaya', 'anorganik', 'drum bekas', 'C', 'Sampah botol dan kaleng bekas minuman, merupakan sampah yang sulit terurai atau disebut anorganik, maka tempat sampah yang cocok adalah yang berwarna kuning atau tempat sampah anorganik. Jawaban yang tepat adalah C.', 2, 4, 11, '2025-07-19 20:12:27', '2025-07-19 20:12:27'),
-(30, 'Siswa mampu memecahkan masalah praktis terkait sampah dengan cara membuang sampah B3 pada\r\ntempatnya', 'Berdasarkan poster dan wacana di atas, Dewi dan Ibunya sebaiknya membuang sampah batu baterai di tempat sampah ….', 'organik', 'bahan berbahaya', 'anorganik', 'drum bekas', 'B', 'Sampah batu baterai mengandung zat yang berbahaya, oleh sebabitu tempat sampah yang cocok adalah yang berwarna merah atau tempat sampah bahan berbahaya. Jawaban yang tepat adalah B.', 2, 4, 11, '2025-07-19 20:13:38', '2025-07-19 20:13:38');
+INSERT INTO `soal` (`id`, `indikator_soal`, `soal`, `pilihan_a`, `pilihan_b`, `pilihan_c`, `pilihan_d`, `kunci_jawaban`, `pembahasan`, `domain_kognitif`, `indikator_literasi`, `teslet`, `paket`, `created_at`, `updated_at`) VALUES
+(1, 'Siswa mampu memahami peristiwa gunung meletus dengan tepat', 'Berdasarkan teks wacana di atas, penjelasan tentang gunung meletus yang tepat adalah….', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh tanah longsor', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh perbuatan manusia', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh terdorongnya endapan magma dalam perut bumi menuju ke luar', 'gunung meletus merupakan peristiwa alam yang disebabkan oleh adanya angin topan', 'C', 'Secara teori dan penjelasan yang ada di dalam wacana, jawaban yang benar adalah C', 1, 1, 1, 1, '2025-07-18 01:10:01', '2025-10-30 08:09:30'),
+(2, 'Siswa mampu memberikan contoh material yang keluar saat terjadi peristiwa gunung meletus', 'Selain endapan magma, material lain yang biasanya keluar terdorong pada peristiwa gunung meletus yaitu….', 'tanah', 'batu', 'air', 'arang', 'B', 'Dari wacana diperoleh informasi bahwa yang keluar bersama magma ketika gunung meletus adalah abu dan batu. Oleh sebab itu jawaban yang benar adalah B.', 1, 2, 1, 1, '2025-07-18 21:06:51', '2025-10-30 08:09:30'),
+(3, 'Siswa mampu memahami dampak negatif yang ditimbulkan oleh peristiwa gunung meletus', 'Dampak negatif yang ditimbulkan dari adanya peristiwa gunung meletus yaitu….', 'lahan di sekitar menjadi subur', 'tumbuhan yang tumbuh menghijau', 'suhu di sekitar gunung menjadi sangat panas', 'suhu di sekitar gunung menjadi sangat dingin', 'C', 'Dari wacana diperoleh informasi bahwa suhu di sekitar gunung yang meletus menjadi sangat panas. Dengan demikian jawaban yang benar adalah C', 1, 3, 1, 1, '2025-07-19 00:37:43', '2025-10-30 08:09:30'),
+(4, 'Siswa mampu memahami faktor penyebab dan bukan faktor penyebab terjadinya tsunami', 'Berdasarkan teks artikel di atas, yang bukan merupakan penyebab terjadinya tsunami adalah….', 'gempa bumi', 'gunung meletus', 'banjir bandang', 'asteroid jatuh', 'C', 'Di wacana menginformasikan bahwa Tsunami juga dapat disebabkan oleh longsor, aktivitas gunung api, serta asteroid dan komet yang menabrak atau meledak di atas laut. Dari pilihan jawaban yang tidak termasuk penyebab tsunami adalah banjir\r\nbandang, Jadi jawaban yang benar adalah C.', 1, 1, 2, 1, '2025-07-19 00:39:17', '2025-10-30 08:09:30'),
+(5, 'Siswa mampu menghubung- kan pengetahu- an yang dimili- kinya dalam konteks faktor penyebab air laut surut sementara setelah	aktivitas seismik', 'Faktor yang menyebabkan timbulnya gejala awal tsunami yaitu air laut menjadi surut sementara waktu, karena adanya aktivitas ….', 'bom di laut yang mengakibatkan ledakan', 'seismik di tengah laut yang mengakibatkan patahan', 'hewan laut yang menyebabkan benturan', 'manusia yang membuat ledakan', 'B', 'Di wacana mengin-formasikan bahwa umumnya tsunami terjadi akibat ada-nya aktivitas seis-mik di tengah laut. Saat terjadi hal tersebut maka patahan akan membuat air laut menjadi surut sementara waktu. Jawaban yang benar adalah B', 2, 7, 2, 1, '2025-07-19 00:41:03', '2025-10-30 08:09:30'),
+(6, 'Siswa mampu memecahkan masalah praktis ketika air laut surut secara tiba-tiba', 'Apa langkah mitigasi yang bisa kita lakukan saat melihat air laut surut secara tiba-tiba setelah aktivitas tektonik?', 'mencari tahu penyebab air laut surut secara tiba-tiba', 'berkeliling di tepi pantai karena air laut surut', 'berlari menyelamatkan diri ke tempat yang lebih tinggi', 'mencari kerang di tepi pantai karena air laut surut', 'C', 'Ketika melihat air laut surut setelah aktivitas tektonik, sebaiknya segera menyelamatkan diri dengan mencari tempat yang lebih tinggi. Jawaban yang benar adalah C', 2, 4, 2, 1, '2025-07-19 00:42:30', '2025-10-30 08:09:30'),
+(7, 'Siswa mampu memahami peristiwa angin topan dengan tepat', 'Berdasarkan teks wacana di atas, penjelasan yang tepat terkait angin topan adalah peristiwa ….', 'biasa yang tidak merugikan kehidupan manusia', 'alam yang menyebabkan perubahan kondisi alam', 'bencana yang disebabkan oleh perbuatan manusia', 'bencana alam yang kejadiannya dapat dicegah', 'B', 'Pada wacana tertera bahwa angin topan merupakan bencana yang disebabkan oleh faktor alam yang bisa  menyebabkan  perubahan\r\nkondisi alam di permukaan bumi. Jawaban yang benar adalah B', 1, 1, 3, 1, '2025-07-19 00:44:30', '2025-10-30 08:09:30'),
+(8, 'Siswa mampu menerapkan pengetahuan sains untuk menyelesaikan masalah', 'Saat angin topan terjadi, berikut ini merupakan tindakan yang perlu dilakukan, kecuali….', 'berlindung pada bangunan yang kokoh', 'menghindari bangunan yang tinggi', 'menghindari kendaraan umum', 'mengindari tiang listrik', 'C', 'Informasi yang ada di wacana, saat angin topan terjadi, perlu dilakukan tindakan siaga bencana, seperti berlindung pada bangunan yang kokoh, hindari bangunan yang tinggi, seperti pohon, tiang listrik, pamflet, dan sejenisnya. Jadi jawaban yang benar adalah C', 2, 10, 3, 1, '2025-07-19 00:46:45', '2025-10-30 08:09:30'),
+(9, 'Siswa mampu memahami dampak negatif yang ditimbulkan oleh angin topan', 'Dampak yang dapat ditimbulkan dari adanya badai angin topan sebagai berikut ini, kecuali menyebabkan ….', 'jatuhnya korban jiwa', 'kerugian materil karena rumah rusak', 'wilayah terdampak menjadi subur', 'kegiatan sosial masyarakat terganggu', 'C', 'Di dalam wacana menginforma- sikan bahwa dampak angin topan sering merobohkan rumah dan pohon, bahkan bisa menerbangkan apa saja yang ada di dekatnya. Secara implisit bermakna dapat menimbulkan korban jiwa, kerugian materi, dan mengganggu kegiatan masyarakat. Jadi jawaban benar adalah C', 1, 3, 3, 1, '2025-07-19 00:52:00', '2025-10-30 08:09:30'),
+(10, 'Siswa mampu menyebutkan contoh fakta ilmiah berupa penyebab terjadinya gempa tektonik', 'Gempa tektonik terjadi karena adanya pergerakan….', 'magma bumi', 'asteroid', 'komet', 'lempeng bumi', 'D', 'Informasi yang tertera di wacana menyebutkan bahwa gempa bumi tektonik terjadi karena pergerakan lempeng bumi. Jadi jawaban yang benar adalah D', 1, 11, 4, 1, '2025-07-19 01:00:03', '2025-10-30 08:09:30'),
+(11, 'Siswa mampu mengelompok kan atau mengklasifikas ikan faktor penyebab gempa dan bukan faktor penyebab gempa', 'Gempa bumi dapat diklasifikasikan berdasarkan beberapa faktor berikut ini, kecuali….', 'kekuatannya', 'kedalamannya', 'jenisnya', 'bentuknya', 'D', 'Di dalam wacana terdapat informasi bahwa gempa bumi dapat diklasifikasikan berdasarkan beberapa	faktor,	yaitu kekuatannya, kedalamannya, dan jenisnya. Jadi bentuk tidak termasuk faktor pengklasifikasi gempa bumi. Jawaban yang benar adalah D', 2, 5, 4, 1, '2025-07-19 01:01:30', '2025-10-30 08:09:30'),
+(12, 'Siswa mampu menjelaskan gempa bumi yang dangkal lebih merusak daripada gempa bumi yang dalam', 'Gempa bumi yang dangkal dapat lebih merusak daripada gempa bumi yang dalam, karena terjadi di ….', 'dasar laut', 'kedalaman lebih dari 60 km', 'dasar bumi', 'dekat permukaan bumi', 'D', 'Dalam wacana juga disebutkan bahwa gempa bumi dangkal terjadi di dekat permukaan bumi. Jadi jawaban yang benar adalah D', 2, 6, 4, 1, '2025-07-19 01:03:11', '2025-10-30 08:09:30'),
+(13, 'Siswa mampu mengenali penyebab banjir yang disebabkan oleh aktivitas manusia', 'Berdasarkan teks wacana di atas, penyebab banjir yang disebabkan oleh faktor manusia adalah….', 'erosi dan sedimentasi', 'curah hujan dan kapasitas sungai', 'pengaruh fisiografi dan air pasang', 'perubahan tata guna lahan dan sampah', 'D', 'Di wacana tertera informasi bahwa banjir dapat terjadi karena alam dan tindakan manusia. Salah satu tindakan manusia adalah perubahan tata guna lahan dan sampah. Jawaban yang benar adalah D', 1, 1, 5, 1, '2025-07-19 01:04:21', '2025-10-30 08:09:30'),
+(14, 'Siswa mampu memecahkan masalah banjir melalui langkah pencegahan yang dapat dilakukan', 'Langkah mitigasi yang dapat kita lakukan untuk mencegah terjadinya banjir yang disebabkan oleh faktor manusia adalah….', 'mengubah hutan menjadi suatu permukiman', 'melakukan langkah deforestasi hutan', 'pembuangan sampah pada tempatnya', 'membuat permukiman penduduk di sepanjang aliran sungai', 'C', 'Di wacana tertera informasi bahwa banjir dapat terjadi karena alam dan tindakan manusia. Salah satu tindakan manusia adalah membuang sampah tidak pada tempatnya. Dengan demikian langkah mitigasi yang perlu dilakukan   adalah   membuang\r\nsampah pada tempatnya. Jadi jawaban benar C', 2, 4, 5, 1, '2025-07-19 01:05:31', '2025-10-30 08:09:30'),
+(15, 'Siswa mampu menghasilkan penjelasan terkait fenomena sains yang dibaca', 'Berikut ini yang merupakan penjelasan tentang fenomena banjir yang tepat sesuai dengan artikel di atas adalah….', 'banjir merupakan peristiwa bencana yang hanya disebabkan oleh faktor alam', 'banjir merupakan peristiwa bencana yang hanya disebabkan oleh faktor tindakan manusia', 'banjir merupakan peristiwa bencana yang penyebab satu- satunya yaitu sampah', 'banjir merupakan peristiwa bencana yang disebabkan oleh faktor alam dan manusia', 'D', 'Di wacana tertera informasi bahwa banjir dapat terjadi karena alam dan tindakan manusia. Jadi tidak hanya disebabkan oleh salah satunya. Jawaban yang benar adalah D', 2, 6, 5, 1, '2025-07-19 01:07:02', '2025-10-30 08:09:30'),
+(16, 'Siswa mampu mengenali faktor penyebab dan bukan faktor penyebab terjadinya longsor oleh aktivitas manusia', 'Berdasarkan teks artikel di atas, berikut ini yang bukan merupakan penyebab longsor hasil dari aktivitas manusia adalah….', 'deforestasi', 'alih fungsi lahan hutan', 'reboisasi', 'penebangan liar', 'C', 'Aktivitas manusia juga dapat menjadi penyebab tanah longsor, seperti deforestasi, alih fungsi lahan hutan. Deforestasi adalah penebangan liar. Jawaban yang benar adalah C', 1, 1, 6, 1, '2025-07-19 19:47:08', '2025-10-30 08:09:30'),
+(17, 'Siswa mampu mencegah terjadinya longsor di lingkungan sekitar', 'Langkah mitigasi perlu dilakukan untuk mencegah terjadinya longsor di lingkungan kita, antara lain adalah ….', 'membangun villa di daerah perbukitan', 'menebang pohon di daerah perbukitan', 'melakukan kegiatan deforestasi hutan', 'melakukan kegiatan reboisasi hutan', 'D', 'Tindakan seperti melarang pembakaran hutan, menghentikan penebangan liar, dan melakukan reboisasi adalah langkah-langkah awal yang efektif dalam mencegah bencana tanah longsor. Jawaban yang benar adalah D.', 2, 4, 6, 1, '2025-07-19 19:48:31', '2025-10-30 08:09:30'),
+(18, 'Siswa mampu menginterpreta sikan data dan informasi yang disajikan dalam bentuk grafik/diagram', 'Berdasakan grafik di atas, jenis sampah yang menempati posisi kedua terbanyak adalah….', 'sisa makanan', 'kayu/ranting/daun', 'logam', 'plastik', 'D', 'Pada grafik tampak bahwa jenis sampah yang menempati posisi pertama adalah sisa makanan (45,6%), ke-dua plastik (18,8%), ke-tiga kertas/karton (11,3%), dst. Jawaban yang benar D', 3, 8, 7, 1, '2025-07-19 19:50:05', '2025-10-30 08:09:30'),
+(19, 'Siswa mampu menginterpreta sikan data dan informasi yang disajikan dalam bentuk grafik', 'Grafik di atas merupakan data statistik terkait jumlah bencana alam yang terjadi di Indonesia dalam kurun waktu tahun 2023 yang dikutip dari laman website Badan Nasional Penanggulangan Bencana (BNPB).\r\nBerdasarkan data grafik di atas, bencana alam yang menempati peringkat ketujuh sebagai bencana alam yang sering terjadi di Indonesia adalah….', 'banjir dan tanah longsor', 'abrasi', 'gempa bumi', 'kekeringan', 'C', 'Dari grafik dapat ditentukan urutan dari bencana yang paling sering terjadi:\r\n1.	Kebakaran hutan\r\n2.	Tanah longsor\r\n3.	Banjir\r\n4.	Puting beliung\r\n5.	Kekeringan\r\n6.	Banjir dan longsor\r\n7.	Gempa bumi\r\n8.	Abrasi\r\nJawaban yang benar C', 3, 8, 12, 1, '2025-07-19 19:58:25', '2025-10-30 08:09:30'),
+(20, 'Siswa mampu menginterpreta sikan data dan informasi yang disajikan dalam bentuk grafik', 'Data grafik di atas merupakan data komposisi sampah nasional berdasarkan sumber sampah pada tahun 2023 yang dikutip dari laman website Kementerian Lingkungan Hidup dan Kehutanan.\r\nSumber sampah yang menempati posisi kelima terbanyak adalah….', 'rumah tangga', 'perkantoran', 'pasar tradisional', 'fasilitas publik', 'B', 'Dari grafik tampak bahwa urutan komposisi sampah dari yang paling besar adalah:\r\n1.	Rumah tangga\r\n2.	Pasar tradisional\r\n3.	Pusat perniagaan\r\n4.	Kawasan\r\n5.	Perkantoran\r\n6.	Fasilitas publik. Jawaban yang benar adalah B', 3, 8, 13, 1, '2025-07-19 19:59:38', '2025-10-30 08:09:30'),
+(21, 'Siswa mampu menarik kesimpulan yang logis berdasarkan data dan informasi yang tersedia', 'Berdasarkan data grafik tersebut, dapat disimpulkan bahwa jumlah bencana alam yang terjadi di Indonesia ….', 'terus meningkat', 'cenderung naik turun', 'cenderung menurun', 'cenderung tetap/ajeg', 'B', 'Dari grafik tampak bahwa dari tahun ke tahun, jumlah kebencanaan	mengalami peningkatan dan penurunan yang fluktuatif (naik-turun). Jawaban yang benar B', 3, 9, 8, 1, '2025-07-19 20:00:58', '2025-10-30 08:09:30'),
+(22, 'Siswa mampu menarik kesimpulan yang logis berdasarkan data dan informasi yang tersedia', 'Berdasarkan grafik di atas, jumlah bencana alam di Indonesia pada kurun waktu tahun 2015 sampai tahun 2020 adalah ....', 'cenderung menurun', 'cenderung meningkat', 'stagnan', 'fluktuatif', 'B', 'Dari grafik tampak bahwa pada kurun waktu 2015 sampai 2020 cenderung meningkat. Jawaban yang benar adalah B', 3, 9, 8, 1, '2025-07-19 20:02:11', '2025-10-30 08:09:30'),
+(23, 'Berdasarkan teks dan tabel di atas, berikut ini yang termasuk kegiatan reduce ialah….', 'Berdasarkan teks dan tabel di atas, berikut ini yang termasuk kegiatan reduce ialah….', 'memanfaatkan botol plastik bekas untuk pot tanaman', 'mengganti kantong plastik dengan tas belanja dari kain', 'mengubah sampah plastik untuk dijadikan tas', 'memanfaatkan botol plastik bekas untuk tempat pensil', 'B', 'Reduce yaitu mengurangi sampah, berarti penggunaan tas belanja dari kain dapat mengurangi sampah kantong plastik. Jawaban benar B', 2, 4, 9, 1, '2025-07-19 20:03:36', '2025-10-30 08:09:30'),
+(24, 'Siswa mampu memecahkan masalah praktis terkait dengan pengelolaan sampah dengan metode\r\nReuse', 'Berdasarkan teks dan tabel di atas, berikut ini yang merupakan kegiatan reuse ialah….', 'memanfaatkan botol plastik bekas sebagai tempat pensil', 'mengubah sampah plastik menjadi tas yang terbuat dari plastik', 'mengganti kantong plastik dengan tas belanja dari kain', 'mengubah sampah plastik menjadi jas hujan', 'A', 'Reuse, yaitu memanfaatkan kembali barang yang masih bisa digunakan. Berati kita dapat memanfaat botol plastik bekas sebagai tempat pinsil. Jawaban yang benar A', 2, 4, 9, 1, '2025-07-19 20:05:13', '2025-10-30 08:09:30'),
+(25, 'Siswa mampu memecahkan masalah praktis terkait dengan pengelolaan sampah dengan metode Recycle', 'Berdasarkan teks dan tabel di atas, berikut ini yang merupakan termasuk kegiatan recycle ialah….', 'memanfaatkan botol plastik bekas sebagai tempat pensil', 'mengganti kantong plastik dengan tas belanja dari kain', 'memanfaatkan botol plastik sebagai pot tanaman', 'mengubah sampah plastik menjadi jas hujan', 'D', 'Recyle, yaitu menggunakan sampah untuk dilakukan daur ulang sehingga menjadi sesuatu yang lebih bernilai. Berarti kita dapat memanfaatkan sampah menjadi benda lain yang bermanfaat, misalnya mengubah sampah plastik menjadi jas hujan\r\natau sepatu atau benda lain. Jawaban benar adalah D', 2, 4, 9, 1, '2025-07-19 20:06:27', '2025-10-30 08:09:30'),
+(26, 'Siswa mampu mengenali dampak negatif dalam bidang ekonomi yang ditimbulkan oleh sampah\r\nplastik', 'Berdasarkan teks artikel di atas, dampak negatif dalam bidang ekonomi yang ditimbulkan dari sampah plastik ialah….', 'penghasilan nelayan meningkat karena tersedia banyak ikan di laut', 'manusia dapat memakan ikan sebagai sumber makanan', 'penghasilan nelayan menurun karena banyak ikan mati akibat mikroplastik', 'manusia bisa membuang sampah ke laut dengan bebas', 'C', 'Dampak mikroplastik pada hasil tangkapan ikan menurun karena banyak ikan yang mati, akibatnya pendapatan menurun dan berdampak negatif pada bidang ekonomi. Jawaban yang benar adalah C', 1, 12, 10, 1, '2025-07-19 20:08:05', '2025-10-30 08:09:30'),
+(27, 'Siswa mampu mengenali dampak negatif sampah plastik terhadap kehidupan masyarakat', 'Berdasarkan teks artikel di atas, dampak negatif sampah plastik terhadap kehidupan masyarakat ialah….', 'dapat mengonsumsi ikan yang baik untuk kesehatan', 'mengonsumsi ikan yang berbahaya bagi kesehatan', 'bebas memakan ikan yang bersumber dari laut', 'memiliki banyak pilihan terkait ikan yang dapat dikonsumsi', 'B', 'Dampak negatif sampah plastik terhadap kehidupan masyarakat yang disampaikan pada wacana adalah bahaya bagi tubuh manusia dan tentunya terkait dengan kesehatan. Jawaban yang benar adalah B.', 1, 3, 10, 1, '2025-07-19 20:09:46', '2025-10-30 08:09:30'),
+(28, 'Siswa mampu memecahkan masalah praktis dengan cara membuang sampah organik pada tempatnya', 'Berdasarkan poster dan wacana di atas, Dewi dan Ibunya sebaiknya membuang sampah sisa sayuran dan buah-buahan pada tempat sampah ….', 'bahan berbahaya', 'anorganik', 'kantong plastik', 'organik', 'D', 'Sisa sayuran dan buah-buahan merupakan sampah yang cepat membusuk atau disebut dengan organik, maka tempat sampah yang dipilih adalah yang berwarna hijau atau tempat sampah organik. Juawaban yang tepat adalah D', 2, 4, 11, 1, '2025-07-19 20:11:13', '2025-10-30 08:09:30'),
+(29, 'Siswa mampu memecahkan masalah praktis dengan cara membuang sampah anorganik pada tempatnya', 'Berdasarkan poster dan wacana di atas, Dewi dan Ibunya sebaiknya membuang sampah botol dan kaleng bekas minuman di tempat sampah ….', 'organik', 'bahan berbahaya', 'anorganik', 'drum bekas', 'C', 'Sampah botol dan kaleng bekas minuman, merupakan sampah yang sulit terurai atau disebut anorganik, maka tempat sampah yang cocok adalah yang berwarna kuning atau tempat sampah anorganik. Jawaban yang tepat adalah C.', 2, 4, 11, 1, '2025-07-19 20:12:27', '2025-10-30 08:09:30'),
+(30, 'Siswa mampu memecahkan masalah praktis terkait sampah dengan cara membuang sampah B3 pada\r\ntempatnya', 'Berdasarkan poster dan wacana di atas, Dewi dan Ibunya sebaiknya membuang sampah batu baterai di tempat sampah ….', 'organik', 'bahan berbahaya', 'anorganik', 'drum bekas', 'B', 'Sampah batu baterai mengandung zat yang berbahaya, oleh sebabitu tempat sampah yang cocok adalah yang berwarna merah atau tempat sampah bahan berbahaya. Jawaban yang tepat adalah B.', 2, 4, 11, 1, '2025-07-19 20:13:38', '2025-10-30 08:09:30');
 
 -- --------------------------------------------------------
 
@@ -384,12 +400,12 @@ INSERT INTO `soal` (`id`, `indikator_soal`, `soal`, `pilihan_a`, `pilihan_b`, `p
 --
 
 CREATE TABLE `teslet` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `judul` varchar(255) NOT NULL,
   `gambar` varchar(255) NOT NULL,
-  `keterangan` text,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -418,16 +434,16 @@ INSERT INTO `teslet` (`id`, `judul`, `gambar`, `keterangan`, `created_at`, `upda
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `class` int DEFAULT NULL,
-  `school` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `level` int DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `class` int(11) DEFAULT NULL,
+  `school` varchar(100) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -503,6 +519,12 @@ ALTER TABLE `nilai`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `paket`
+--
+ALTER TABLE `paket`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
@@ -550,61 +572,67 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `domain_kognitif`
 --
 ALTER TABLE `domain_kognitif`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `indikator_literasi`
 --
 ALTER TABLE `indikator_literasi`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+
+--
+-- AUTO_INCREMENT for table `paket`
+--
+ALTER TABLE `paket`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `petunjuk`
 --
 ALTER TABLE `petunjuk`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `soal`
 --
 ALTER TABLE `soal`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `teslet`
 --
 ALTER TABLE `teslet`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\RefinementController;
+use App\Http\Controllers\PaketController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,6 +69,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/soal', [SoalController::class, 'store'])->name('soal.store');
     Route::put('/soal/{id}', [SoalController::class, 'update'])->name('soal.update');
     Route::delete('/soal/{id}', [SoalController::class, 'destroy'])->name('soal.destroy');
+
+    Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store');
+    Route::put('/paket/{id}', [PaketController::class, 'update'])->name('paket.update');
+    Route::delete('/paket/{id}', [PaketController::class, 'destroy'])->name('paket.destroy');
+    Route::get('/paket/{id}', [PaketController::class, 'show'])->name('paket.show');
 
 });
 

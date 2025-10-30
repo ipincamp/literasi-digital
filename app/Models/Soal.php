@@ -23,6 +23,7 @@ class Soal extends Model
         'domain_kognitif',
         'indikator_literasi',
         'teslet',
+        'paket',
     ];
 
     public function domain()
@@ -39,6 +40,4 @@ class Soal extends Model
     {
         return $this->belongsTo(Teslet::class, 'teslet');
     }
-
-
 }

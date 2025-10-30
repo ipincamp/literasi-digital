@@ -14,6 +14,7 @@ class UjianController extends Controller
     public function index(Request $request)
     {
         $soals = DB::table('soal')
+            ->join('paket', 'soal.paket', '=', 'paket.id') // inner join: hanya soal dengan paket
             ->leftJoin('teslet', 'soal.teslet', '=', 'teslet.id')
             ->leftJoin('domain_kognitif', 'soal.domain_kognitif', '=', 'domain_kognitif.id')
             ->leftJoin('indikator_literasi', 'soal.indikator_literasi', '=', 'indikator_literasi.id')
@@ -23,10 +24,13 @@ class UjianController extends Controller
                 'teslet.keterangan as teslet_keterangan',
                 'teslet.gambar as teslet_gambar',
                 'domain_kognitif.keterangan as domain_keterangan',
-                'indikator_literasi.keterangan as indikator_keterangan'
+                'indikator_literasi.keterangan as indikator_keterangan',
+                'paket.nama_paket as paket_nama'
             )
+            ->where('paket.status', 'aktif')
             ->orderBy('soal.id')
             ->get();
+
 
         $current = $request->get('nomor', 1);
         $soal = $soals[$current - 1] ?? null;
