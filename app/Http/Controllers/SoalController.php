@@ -18,20 +18,20 @@ class SoalController extends Controller
             ->leftJoin('teslet', 'soal.teslet', '=', 'teslet.id')
             ->leftJoin('domain_kognitif', 'soal.domain_kognitif', '=', 'domain_kognitif.id')
             ->leftJoin('indikator_literasi', 'soal.indikator_literasi', '=', 'indikator_literasi.id')
-            ->leftJoin('paket', 'soal.paket', '=', 'paket.id') // tambahan join paket
+            ->leftJoin('paket', 'soal.paket', '=', 'paket.id')
             ->select(
                 'soal.*',
                 'teslet.gambar as teslet_gambar',
                 'domain_kognitif.keterangan as domain_keterangan',
                 'indikator_literasi.keterangan as indikator_keterangan',
-                'paket.nama_paket as paket_keterangan' // ambil nama paket
+                'paket.nama_paket as paket_keterangan'
             )
             ->get();
 
         $domains = DomainKognitif::all();
         $indikators = IndikatorLiterasi::all();
         $teslets = Teslet::all();
-        $pakets = Paket::orderBy('nama_paket')->get(); // kirim daftar paket ke view
+        $pakets = Paket::orderBy('nama_paket')->get();
 
         return view('soal.index', compact('soals', 'domains', 'indikators', 'teslets', 'pakets'));
     }
@@ -39,21 +39,21 @@ class SoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'indikator_soal' => 'nullable',
-            'soal' => 'nullable',
-            'pilihan_a' => 'nullable',
-            'pilihan_b' => 'nullable',
-            'pilihan_c' => 'nullable',
-            'pilihan_d' => 'nullable',
-            'kunci_jawaban' => 'nullable|in:A,B,C,D',
-            'pembahasan' => 'nullable',
-            'domain_kognitif' => 'nullable|exists:domain_kognitif,id',
-            'indikator_literasi' => 'nullable|exists:indikator_literasi,id',
-            'teslet' => 'nullable|exists:teslet,id',
-            'paket' => 'nullable|exists:paket,id', // validasi paket
+            'indikator_soal' => 'required',
+            'soal' => 'required',
+            'pilihan_a' => 'required',
+            'pilihan_b' => 'required',
+            'pilihan_c' => 'required',
+            'pilihan_d' => 'required',
+            'pilihan_e' => 'nullable', // tidak wajib
+            'kunci_jawaban' => 'required|in:A,B,C,D,E',
+            'pembahasan' => 'required',
+            'domain_kognitif' => 'required|exists:domain_kognitif,id',
+            'indikator_literasi' => 'required|exists:indikator_literasi,id',
+            'teslet' => 'required|exists:teslet,id',
+            'paket' => 'required|exists:paket,id',
         ]);
 
-        // Simpan hanya field yang diperlukan (hindari mass-assignment tak terduga)
         $data = $request->only([
             'indikator_soal',
             'soal',
@@ -61,6 +61,7 @@ class SoalController extends Controller
             'pilihan_b',
             'pilihan_c',
             'pilihan_d',
+            'pilihan_e',
             'kunci_jawaban',
             'pembahasan',
             'domain_kognitif',
@@ -79,18 +80,19 @@ class SoalController extends Controller
         $soal = Soal::findOrFail($id);
 
         $request->validate([
-            'indikator_soal' => 'nullable',
-            'soal' => 'nullable',
-            'pilihan_a' => 'nullable',
-            'pilihan_b' => 'nullable',
-            'pilihan_c' => 'nullable',
-            'pilihan_d' => 'nullable',
-            'kunci_jawaban' => 'nullable|in:A,B,C,D',
-            'pembahasan' => 'nullable',
-            'domain_kognitif' => 'nullable|exists:domain_kognitif,id',
-            'indikator_literasi' => 'nullable|exists:indikator_literasi,id',
-            'teslet' => 'nullable|exists:teslet,id',
-            'paket' => 'nullable|exists:paket,id', // validasi paket
+            'indikator_soal' => 'required',
+            'soal' => 'required',
+            'pilihan_a' => 'required',
+            'pilihan_b' => 'required',
+            'pilihan_c' => 'required',
+            'pilihan_d' => 'required',
+            'pilihan_e' => 'nullable', // tidak wajib
+            'kunci_jawaban' => 'required|in:A,B,C,D,E',
+            'pembahasan' => 'required',
+            'domain_kognitif' => 'required|exists:domain_kognitif,id',
+            'indikator_literasi' => 'required|exists:indikator_literasi,id',
+            'teslet' => 'required|exists:teslet,id',
+            'paket' => 'required|exists:paket,id',
         ]);
 
         $data = $request->only([
@@ -100,6 +102,7 @@ class SoalController extends Controller
             'pilihan_b',
             'pilihan_c',
             'pilihan_d',
+            'pilihan_e',
             'kunci_jawaban',
             'pembahasan',
             'domain_kognitif',

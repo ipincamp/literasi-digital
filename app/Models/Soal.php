@@ -18,6 +18,7 @@ class Soal extends Model
         'pilihan_b',
         'pilihan_c',
         'pilihan_d',
+        'pilihan_e',
         'kunci_jawaban',
         'pembahasan',
         'domain_kognitif',
