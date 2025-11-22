@@ -5,14 +5,14 @@
     <h4 class="mb-4">Petunjuk</h4>
 
     @if (session('success') && auth()->user()->level == 1)
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     {{-- Tombol tambah hanya untuk admin --}}
     @if(auth()->user()->level == 1)
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-            <i class="bi bi-plus-circle"></i> Tambah Petunjuk
-        </button>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
+        <i class="bi bi-plus-circle"></i> Tambah Petunjuk
+    </button>
     @endif
 
     <table class="table table-bordered table-striped">
@@ -21,7 +21,7 @@
                 <th>No</th>
                 <th>Isi Petunjuk</th>
                 @if(auth()->user()->level == 1)
-                    <th width="100">Aksi</th>
+                <th width="100">Aksi</th>
                 @endif
             </tr>
         </thead>
@@ -104,8 +104,8 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <script>
     ClassicEditor.create(document.querySelector('#editorTambah')).catch(error => console.error(error));
-    @foreach ($petunjuks as $item)
-        ClassicEditor.create(document.querySelector('#editorEdit{{ $item->id }}')).catch(error => console.error(error));
+    @foreach($petunjuks as $item)
+    ClassicEditor.create(document.querySelector('#editorEdit{{ $item->id }}')).catch(error => console.error(error));
     @endforeach
 </script>
 @endif

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Soal;
 use App\Models\Nilai;
+use App\Models\Paket;
 use Carbon\Carbon;
 
 class UjianController extends Controller
@@ -82,13 +83,35 @@ class UjianController extends Controller
         $idSiswa = Auth::id();
         $percobaan = session('ujian_percobaan', 1);
 
+        // 1. Dapatkan ID Paket yang 'aktif'
+        // Gunakan first() karena kemungkinan hanya ada satu paket aktif (berdasarkan skema)
+        $paketAktif = DB::table('paket')
+            ->where('status', 'aktif')
+            ->first();
+
+        $idPaketAktif = $paketAktif ? $paketAktif->id : null;
+
+        // 2. Hitung Jumlah Soal yang AKTIF
+        if ($idPaketAktif) {
+            $jumlahSoal = DB::table('soal')
+                ->where('paket', $idPaketAktif)
+                ->count();
+        } else {
+            // Jika tidak ada paket aktif, jumlah soal adalah 0
+            $jumlahSoal = 0;
+        }
+
+        // 3. Hitung Total Jawaban Benar (Diasumsikan nilai hanya berasal dari soal paket aktif)
+        // Kita tetap menggunakan kueri lama karena tidak ada relasi soal_id di tabel nilai
         $totalBenar = Nilai::where('id_siswa', $idSiswa)
             ->where('percobaan', $percobaan)
             ->sum('nilai');
 
-        $jumlahSoal = Soal::count();
+        // 4. Hitung Nilai Akhir
+        // Formula: (Total Benar / Jumlah Soal Aktif) * 100
         $nilai = $jumlahSoal > 0 ? ($totalBenar / $jumlahSoal) * 100 : 0;
 
+        // Perhitungan Waktu Tetap
         $waktuMulai = session('waktu_mulai');
         $waktuSelesai = session('waktu_selesai', now());
 

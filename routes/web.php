@@ -34,6 +34,8 @@ Route::delete('/petunjuk/{id}', [PetunjukController::class, 'destroy'])->name('p
 Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
 Route::delete('/nilai/{percobaan}/{id_siswa}', [NilaiController::class, 'destroy'])->name('nilai.destroy');
 
+Route::get('/nilai/export/excel', [NilaiController::class, 'exportExcel'])->name('nilai.export.excel');
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
@@ -84,5 +86,6 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/ujian/selesai', [UjianController::class, 'selesai'])->name('ujian.selesai');
     Route::get('/refinement/{id_siswa}/{percobaan}', [RefinementController::class, 'show'])->name('refinement.show');
     Route::get('/refinement/{id_siswa}/{percobaan}', [RefinementController::class, 'download'])->name('refinement.show');
+    Route::get('/nilai/detail/{id_siswa}/{percobaan}', [NilaiController::class, 'getDetailJawaban'])->name('nilai.detail');
 
 });
