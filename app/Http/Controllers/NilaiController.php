@@ -43,7 +43,7 @@ class NilaiController extends Controller
                     DB::raw('MIN(nilai.created_at) as mulai'),
                     DB::raw('MAX(nilai.created_at) as selesai')
                 )
-                ->groupBy('users.id', 'users.name', 'nilai.percobaan')
+                ->groupBy('users.id', 'users.name', 'nilai.percobaan', 'nilai.id_siswa')
                 ->orderByDesc('selesai')
                 ->get();
 
